@@ -44,15 +44,15 @@ public class ConceptMap {
 	}
 
 	public boolean isLinkedDirected(Concept a, Concept b) {
-		return isLinkedDirected(indexOf(a), indexOf(b));
+		return isLinkedDirectedStartToEnd(indexOf(a), indexOf(b));
 	}
 
 	public boolean isLinkedUndirected(Concept a, Concept b) {
 		return isLinkedUndirected(indexOf(a), indexOf(b));
 	}
 
-	public boolean isLinkedDirected(int i, int j) {
-		return adjacencyMatrix[i][j] != null;
+	public boolean isLinkedDirectedStartToEnd(int i, int j) {
+		return adjacencyMatrix[i][j] != null && adjacencyMatrix[j][i] == null;
 	}
 
 	public boolean isLinkedUndirected(int i, int j) {
@@ -126,7 +126,7 @@ public class ConceptMap {
 		int i = indexOf(a);
 		int j = indexOf(b);
 
-		return adjacencyMatrix[i][j];
+		return getLink(i, j);
 	}
 
 	public int getConceptCount() {
@@ -156,4 +156,34 @@ public class ConceptMap {
 		}
 		return builder.toString();
 	}
+
+	// TODO untested
+	public void setDirectedRelationToUndirected(Concept start, Concept end) {
+		int startIndex = indexOf(start);
+		int endIndex = indexOf(end);
+
+		Link l1 = adjacencyMatrix[startIndex][endIndex];
+		if (l1 == null)
+			adjacencyMatrix[startIndex][endIndex] = adjacencyMatrix[endIndex][startIndex];
+		else
+			adjacencyMatrix[endIndex][startIndex] = l1;
+
+	}
+
+	public boolean isAnyLinkExisting(Concept concept, Concept concept2) {
+		int a = indexOf(concept);
+		int b = indexOf(concept2);
+
+		return isAnyLinkExisting(a, b);
+	}
+
+	private boolean isAnyLinkExisting(int indexA, int indexB) {
+		return !(adjacencyMatrix[indexA][indexB] == null && adjacencyMatrix[indexB][indexA] == null);
+	}
+
+	public Link getLink(int i, int j) {
+		return adjacencyMatrix[i][j];
+		
+	}
+
 }
