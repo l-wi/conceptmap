@@ -154,7 +154,11 @@ public class ConceptMap {
 			}
 			builder.append("\n");
 		}
-		return builder.toString();
+
+		String result = builder.toString().trim();
+
+		return (result.equals("")) ? "- empty concept map -" : result;
+
 	}
 
 	// TODO untested
@@ -183,7 +187,19 @@ public class ConceptMap {
 
 	public Link getLink(int i, int j) {
 		return adjacencyMatrix[i][j];
-		
+
+	}
+
+	public void clear() {
+
+		for (int i = 0; i < concepts.size(); i++) {
+			for (int j = 0; i < concepts.size(); j++) {
+				adjacencyMatrix[i][j] = null;
+			}
+		}
+
+		concepts.clear();
+
 	}
 
 }
