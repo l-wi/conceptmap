@@ -159,7 +159,6 @@ public class ConceptMap {
 
 	}
 
-	// TODO untested
 	public void setDirectedRelationToUndirected(Concept start, Concept end) {
 		int startIndex = indexOf(start);
 		int endIndex = indexOf(end);
