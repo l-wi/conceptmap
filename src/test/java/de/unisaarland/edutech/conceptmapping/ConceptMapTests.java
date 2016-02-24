@@ -14,7 +14,7 @@ public class ConceptMapTests {
 	public void testAddConceptAndCount() {
 		// given
 		HashMap<String, Concept> concepts = new HashMap<String, Concept>();
-		ConceptMap map = createTestMap(concepts);
+		ConceptMap map = createNonLinkedTestMap(concepts);
 		// then
 		assertSame(6, map.getConceptCount());
 
@@ -24,7 +24,7 @@ public class ConceptMapTests {
 	public void testIndexOf() {
 		// given
 		HashMap<String, Concept> concepts = new HashMap<String, Concept>();
-		ConceptMap map = createTestMap(concepts);
+		ConceptMap map = createNonLinkedTestMap(concepts);
 
 		// when
 		int dogIndex = map.indexOf(concepts.get("dog"));
@@ -49,7 +49,7 @@ public class ConceptMapTests {
 				+ "Airpl.:		null		null		null		null		null		null		\n";
 
 		HashMap<String, Concept> concepts = new HashMap<String, Concept>();
-		ConceptMap map = createTestMap(concepts);
+		ConceptMap map = createNonLinkedTestMap(concepts);
 
 		// when
 		createLinkedMatrix(concepts, map);
@@ -68,7 +68,7 @@ public class ConceptMapTests {
 				+ "Airpl.:		null		null		null		null		null	\t\n"
 				+ "Trap:		null		null		null		null		null	\t\n";
 		HashMap<String, Concept> concepts = new HashMap<String, Concept>();
-		ConceptMap map = createTestMap(concepts);
+		ConceptMap map = createNonLinkedTestMap(concepts);
 
 		Concept dog = concepts.get("dog");
 		Concept cat = concepts.get("cat");
@@ -85,6 +85,27 @@ public class ConceptMapTests {
 		assertSame(4, map.getConceptCount());
 
 	}
+	
+	
+	@Test
+	public void testSetDirectedRelationToUndirected(){
+		//given
+		HashMap<String, Concept> concepts = new HashMap<String, Concept>();
+		ConceptMap map = createNonLinkedTestMap(concepts);
+		createLinkedMatrix(concepts, map);
+		
+		Concept mouse = concepts.get("mouse");
+		Concept trap  = concepts.get("trap");
+
+		assertTrue(map.isLinkedDirected(mouse, trap));
+
+		//when
+		map.setDirectedRelationToUndirected(mouse, trap);
+		
+		//then
+		assertTrue(map.isLinkedUndirected(mouse, trap));
+		
+	}
 
 	private void createLinkedMatrix(HashMap<String, Concept> concepts, ConceptMap map) {
 		int dogIndex = map.indexOf(concepts.get("dog"));
@@ -99,7 +120,7 @@ public class ConceptMapTests {
 		map.addDirectedLink(concepts.get("mouse"), concepts.get("trap"));
 	}
 
-	private ConceptMap createTestMap(HashMap<String, Concept> cm) {
+	private ConceptMap createNonLinkedTestMap(HashMap<String, Concept> cm) {
 		//
 		User tim = new User("tim", "tim@somemail.com");
 		FocusQuestion question = new FocusQuestion("test=", tim);
@@ -123,5 +144,6 @@ public class ConceptMapTests {
 
 		return map;
 	}
+
 
 }
