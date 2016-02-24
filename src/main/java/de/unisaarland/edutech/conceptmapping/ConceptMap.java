@@ -155,9 +155,7 @@ public class ConceptMap {
 			builder.append("\n");
 		}
 
-		String result = builder.toString().trim();
-
-		return (result.equals("")) ? "- empty concept map -" : result;
+		return (builder.toString().trim().equals("")) ? "- empty concept map -" : builder.toString();
 
 	}
 
