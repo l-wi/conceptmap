@@ -1,9 +1,10 @@
 package de.unisaarland.edutech.conceptmapping;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class ConceptMap {
+public class ConceptMap implements Cloneable {
 
 	private static final int LIST_INITIAL_CAPACITY = 64;
 
@@ -196,6 +197,59 @@ public class ConceptMap {
 		}
 
 		concepts.clear();
+
+	}
+
+	@Override
+	public ConceptMap clone() {
+		List<User> participantsClone = new ArrayList<>();
+		participantsClone.addAll(experiment.getParticipants());
+
+		// focus Question
+		FocusQuestion oldQuestion = experiment.getFocusQuestion();
+		User creatorClone = oldQuestion.getCreator();
+		Date creationDateClone = new Date(oldQuestion.getCreationDate().getTime());
+		FocusQuestion questionClone = new FocusQuestion(oldQuestion.getQuestion(), creatorClone, creationDateClone);
+
+		// experiment
+		User researcherClone = this.experiment.getReseacher();
+		Date runDateClone = new Date(this.experiment.getRunDate().getTime());
+		Experiment experimentClone = new Experiment(researcherClone, questionClone, runDateClone);
+		participantsClone.forEach((v) -> experiment.addParticipant(v));
+
+		ConceptMap map;
+		
+		try {
+			map = (ConceptMap) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException(e);
+		}
+
+		map.experiment = experimentClone;
+		map.adjacencyMatrix = new Link[this.adjacencyMatrix.length][this.adjacencyMatrix.length];
+		map.concepts = new ArrayList<>();
+		
+		// concepts
+		for (Concept c : concepts) {
+			map.concepts.add(c.clone());
+		}
+
+		// adjacency matrix
+		for (int i = 0; i < adjacencyMatrix.length; i++) {
+			for (int j = 0; j < adjacencyMatrix[i].length; j++) {
+				Link l = adjacencyMatrix[i][j];
+				if (l != null) {
+					User u1 = l.getFirstUser();
+					User u2 = l.getSecondUser();
+
+					CollaborativeString captionClone = l.getCaption().clone();
+					map.adjacencyMatrix[i][j] = new Link(u1, u2, captionClone);
+				} else
+					map.adjacencyMatrix[i][j] = null;
+			}
+		}
+
+		return map;
 
 	}
 

@@ -32,23 +32,38 @@ public class Concept {
 		return y;
 	}
 
-	public void setX(double x) {
+	public void setPosition(double x, double y,double r){
+		setX(x);
+		setY(y);
+		setRotate(r);
+	}
+	
+	private void setX(double x) {
 		if (x < 0 || x > 1)
 			throw new RuntimeException("x coordinate for concept does not fullfill 0<x<1 x=" + x);
 		this.x = x;
 	}
 
-	public void setY(double y) {
+	private void setY(double y) {
 		if (y < 0 || y > 1)
 			throw new RuntimeException("x coordinate for concept does not fullfill 0<y<1 y=" + y);
 		this.y = y;
 	}
 
-	public void setRotate(double rotate) {
+	private void setRotate(double rotate) {
 		this.rotate = rotate;
 	}
 	
 	public double getRotate() {
 		return rotate;
+	}
+
+	@Override
+	public Concept clone() {
+		try {
+			return (Concept) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

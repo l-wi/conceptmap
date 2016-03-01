@@ -145,5 +145,6 @@ public class ConceptMapTests {
 		return map;
 	}
 
+	//TODO test clone method
 
 }

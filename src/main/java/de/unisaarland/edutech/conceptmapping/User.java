@@ -58,4 +58,6 @@ public class User {
 		if (!EMAIL_VALIDATOR.isValid(email))
 			throw new EmailException(email);
 	}
+	
+
 }

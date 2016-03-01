@@ -15,8 +15,12 @@ public class Experiment {
 	private FocusQuestion focusQuestion;
 
 	public Experiment(User researcher, FocusQuestion question) {
+		this(researcher, question, new Date());
+	}
+
+	public Experiment(User researcher, FocusQuestion question, Date run) {
 		this.reseacher = researcher;
-		this.runDate = new Date();
+		this.runDate = run;
 		this.focusQuestion = question;
 	}
 

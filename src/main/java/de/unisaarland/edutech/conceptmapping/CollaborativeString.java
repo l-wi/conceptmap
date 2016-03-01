@@ -3,7 +3,7 @@ package de.unisaarland.edutech.conceptmapping;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollaborativeString {
+public class CollaborativeString implements Cloneable {
 
 	private class Position {
 
@@ -164,5 +164,23 @@ public class CollaborativeString {
 		}
 
 		return debugBuilder.toString();
+	}
+
+	@Override
+	public CollaborativeString clone() {
+		CollaborativeString s;
+		try {
+			s = (CollaborativeString) super.clone();
+
+			s.builder = new StringBuilder(this.builder.toString());
+			s.positions = new ArrayList<>();
+
+			for (Position p : this.positions)
+				s.positions.add(new Position(p.length, p.u));
+
+			return s;
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

@@ -10,9 +10,13 @@ public class FocusQuestion {
 	private Date creationDate;
 
 	public FocusQuestion(String question, User creator) {
+		this(question,creator,new Date());
+	}
+	
+	public FocusQuestion(String question, User creator, Date creation) {
 		this.question = question;
 		this.creator = creator;
-		this.creationDate = new Date();
+		this.creationDate = creation;
 	}
 
 	public Date getCreationDate() {
