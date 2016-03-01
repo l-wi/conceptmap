@@ -202,8 +202,7 @@ public class ConceptMap implements Cloneable {
 
 	@Override
 	public ConceptMap clone() {
-		List<User> participantsClone = new ArrayList<>();
-		participantsClone.addAll(experiment.getParticipants());
+	
 
 		// focus Question
 		FocusQuestion oldQuestion = experiment.getFocusQuestion();
@@ -215,7 +214,8 @@ public class ConceptMap implements Cloneable {
 		User researcherClone = this.experiment.getReseacher();
 		Date runDateClone = new Date(this.experiment.getRunDate().getTime());
 		Experiment experimentClone = new Experiment(researcherClone, questionClone, runDateClone);
-		participantsClone.forEach((v) -> experiment.addParticipant(v));
+		
+		experiment.getParticipants().forEach((v) -> experimentClone.addParticipant(v));
 
 		ConceptMap map;
 		
