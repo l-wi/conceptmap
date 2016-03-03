@@ -63,7 +63,9 @@ public class Concept implements Serializable {
 	@Override
 	public Concept clone() {
 		try {
-			return (Concept) super.clone();
+			Concept c =  (Concept) super.clone();
+			c.name = name.clone();
+			return c;
 		} catch (CloneNotSupportedException e) {
 			throw new RuntimeException(e);
 		}
