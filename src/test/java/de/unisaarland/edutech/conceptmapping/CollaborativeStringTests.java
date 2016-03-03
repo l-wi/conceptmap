@@ -117,5 +117,21 @@ public class CollaborativeStringTests {
 				s1.toDebugString());
 
 	}
+	
+	@Test
+	public void testClone(){
+		//given
+		User u4 = new User("Ingo", "kerstin@email.de");
+
+		CollaborativeString s1 = new CollaborativeString(u4, "this ");
+		
+		//when
+		CollaborativeString s2 = s1.clone();
+		
+		//then
+		assertEquals(s1, s2);
+		s2.append(u4, " is");
+		assertNotEquals(s1, s2);
+	}
 
 }
