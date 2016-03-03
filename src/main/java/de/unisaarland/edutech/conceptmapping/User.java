@@ -1,10 +1,12 @@
 package de.unisaarland.edutech.conceptmapping;
 
+import java.io.Serializable;
+
 import org.apache.commons.validator.routines.EmailValidator;
 
 import de.unisaarland.edutech.conceptmapping.exception.EmailException;
 
-public class User {
+public class User implements Serializable {
 
 	private static final EmailValidator EMAIL_VALIDATOR = EmailValidator.getInstance();
 	private String name;

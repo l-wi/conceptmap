@@ -1,5 +1,6 @@
 package de.unisaarland.edutech.conceptmapping;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class Experiment {
+public class Experiment implements Serializable {
 
 	private User reseacher;
 	private Date runDate;
@@ -64,4 +65,48 @@ public class Experiment {
 		return builder.toString();
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((focusQuestion == null) ? 0 : focusQuestion.hashCode());
+		result = prime * result + ((participants == null) ? 0 : participants.hashCode());
+		result = prime * result + ((reseacher == null) ? 0 : reseacher.hashCode());
+		result = prime * result + ((runDate == null) ? 0 : runDate.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Experiment other = (Experiment) obj;
+		if (focusQuestion == null) {
+			if (other.focusQuestion != null)
+				return false;
+		} else if (!focusQuestion.equals(other.focusQuestion))
+			return false;
+		if (participants == null) {
+			if (other.participants != null)
+				return false;
+		} else if (!participants.equals(other.participants))
+			return false;
+		if (reseacher == null) {
+			if (other.reseacher != null)
+				return false;
+		} else if (!reseacher.equals(other.reseacher))
+			return false;
+		if (runDate == null) {
+			if (other.runDate != null)
+				return false;
+		} else if (!runDate.equals(other.runDate))
+			return false;
+		return true;
+	}
+
+	
 }

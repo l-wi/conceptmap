@@ -1,10 +1,12 @@
 package de.unisaarland.edutech.conceptmapping;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class ConceptMap implements Cloneable {
+public class ConceptMap implements Cloneable, Serializable {
 
 	private static final int LIST_INITIAL_CAPACITY = 64;
 
@@ -250,7 +252,41 @@ public class ConceptMap implements Cloneable {
 		}
 
 		return map;
-
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.deepHashCode(adjacencyMatrix);
+		result = prime * result + ((concepts == null) ? 0 : concepts.hashCode());
+		result = prime * result + ((experiment == null) ? 0 : experiment.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ConceptMap other = (ConceptMap) obj;
+		if (!Arrays.deepEquals(adjacencyMatrix, other.adjacencyMatrix))
+			return false;
+		if (concepts == null) {
+			if (other.concepts != null)
+				return false;
+		} else if (!concepts.equals(other.concepts))
+			return false;
+		if (experiment == null) {
+			if (other.experiment != null)
+				return false;
+		} else if (!experiment.equals(other.experiment))
+			return false;
+		return true;
+	}
+
+	
 }

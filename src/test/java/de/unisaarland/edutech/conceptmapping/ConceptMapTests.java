@@ -4,6 +4,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 import org.junit.Test;
@@ -85,26 +92,25 @@ public class ConceptMapTests {
 		assertSame(4, map.getConceptCount());
 
 	}
-	
-	
+
 	@Test
-	public void testSetDirectedRelationToUndirected(){
-		//given
+	public void testSetDirectedRelationToUndirected() {
+		// given
 		HashMap<String, Concept> concepts = new HashMap<String, Concept>();
 		ConceptMap map = createNonLinkedTestMap(concepts);
 		createLinkedMatrix(concepts, map);
-		
+
 		Concept mouse = concepts.get("mouse");
-		Concept trap  = concepts.get("trap");
+		Concept trap = concepts.get("trap");
 
 		assertTrue(map.isLinkedDirected(mouse, trap));
 
-		//when
+		// when
 		map.setDirectedRelationToUndirected(mouse, trap);
-		
-		//then
+
+		// then
 		assertTrue(map.isLinkedUndirected(mouse, trap));
-		
+
 	}
 
 	private void createLinkedMatrix(HashMap<String, Concept> concepts, ConceptMap map) {
@@ -145,6 +151,31 @@ public class ConceptMapTests {
 		return map;
 	}
 
-	//TODO test clone method
+	@Test
+	public void testSerialize() throws IOException, ClassNotFoundException{
+		// given
+		HashMap<String, Concept> concepts = new HashMap<String, Concept>();
+		ConceptMap map = createNonLinkedTestMap(concepts);
+		createLinkedMatrix(concepts, map);
+		
+		File f = File.createTempFile("test", ".tmp");
+		
+		
+		//when
+		ObjectOutputStream outputter = new ObjectOutputStream(new FileOutputStream(f));
+		ObjectInputStream inputter = new ObjectInputStream(new FileInputStream(f));
+		outputter.writeObject(map);
+		outputter.close();
+		
+		ConceptMap newMap = (ConceptMap) inputter.readObject();
+		
+		
+		//then
+		assertSame(map.getConceptCount(),newMap.getConceptCount());
+		assertEquals(map,newMap);
+		
+	}
+
+	// TODO test clone method
 
 }

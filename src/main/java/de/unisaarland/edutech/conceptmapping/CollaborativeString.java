@@ -1,11 +1,12 @@
 package de.unisaarland.edutech.conceptmapping;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollaborativeString implements Cloneable {
+public class CollaborativeString implements Cloneable, Serializable {
 
-	private class Position {
+	private class Position implements Serializable {
 
 		public Position(int length, User u) {
 			this.length = length;
@@ -18,6 +19,40 @@ public class CollaborativeString implements Cloneable {
 		@Override
 		public String toString() {
 			return "Position Length: " + length;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + getOuterType().hashCode();
+			result = prime * result + length;
+			result = prime * result + ((u == null) ? 0 : u.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Position other = (Position) obj;
+
+			if (length != other.length)
+				return false;
+			if (u == null) {
+				if (other.u != null)
+					return false;
+			} else if (!u.equals(other.u))
+				return false;
+			return true;
+		}
+
+		private CollaborativeString getOuterType() {
+			return CollaborativeString.this;
 		}
 	}
 
@@ -183,4 +218,42 @@ public class CollaborativeString implements Cloneable {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((builder == null) ? 0 : builder.hashCode());
+		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
+		result = prime * result + ((positions == null) ? 0 : positions.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CollaborativeString other = (CollaborativeString) obj;
+		if (builder == null) {
+			if (other.builder != null)
+				return false;
+		} else if (!builder.toString().equals(other.builder.toString()))
+			return false;
+		if (owner == null) {
+			if (other.owner != null)
+				return false;
+		} else if (!owner.equals(other.owner))
+			return false;
+		if (positions == null) {
+			if (other.positions != null)
+				return false;
+		} else if (!positions.equals(other.positions))
+			return false;
+		return true;
+	}
+
 }
