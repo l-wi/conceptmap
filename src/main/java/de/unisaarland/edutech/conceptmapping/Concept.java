@@ -2,7 +2,7 @@ package de.unisaarland.edutech.conceptmapping;
 
 import java.io.Serializable;
 
-public class Concept implements Serializable {
+public class Concept implements Serializable, Cloneable{
 
 	private CollaborativeString name;
 	private double x;
@@ -63,7 +63,9 @@ public class Concept implements Serializable {
 	@Override
 	public Concept clone() {
 		try {
-			return (Concept) super.clone();
+			Concept c =  (Concept) super.clone();
+			c.name = name.clone();
+			return c;
 		} catch (CloneNotSupportedException e) {
 			throw new RuntimeException(e);
 		}
