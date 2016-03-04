@@ -1,8 +1,6 @@
 package de.unisaarland.edutech.conceptmapping;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -152,30 +150,45 @@ public class ConceptMapTests {
 	}
 
 	@Test
-	public void testSerialize() throws IOException, ClassNotFoundException{
+	public void testSerialize() throws IOException, ClassNotFoundException {
 		// given
 		HashMap<String, Concept> concepts = new HashMap<String, Concept>();
 		ConceptMap map = createNonLinkedTestMap(concepts);
 		createLinkedMatrix(concepts, map);
-		
+
 		File f = File.createTempFile("test", ".tmp");
-		
-		
-		//when
+
+		// when
 		ObjectOutputStream outputter = new ObjectOutputStream(new FileOutputStream(f));
 		ObjectInputStream inputter = new ObjectInputStream(new FileInputStream(f));
 		outputter.writeObject(map);
 		outputter.close();
-		
+
 		ConceptMap newMap = (ConceptMap) inputter.readObject();
-		
-		
-		//then
-		assertSame(map.getConceptCount(),newMap.getConceptCount());
-		assertEquals(map,newMap);
-		
+
+		// then
+		assertSame(map.getConceptCount(), newMap.getConceptCount());
+		assertEquals(map, newMap);
+
 	}
 
-	// TODO test clone method
+	@Test
+	public void testClone() {
+		// given
+		HashMap<String, Concept> concepts = new HashMap<String, Concept>();
+		ConceptMap map = createNonLinkedTestMap(concepts);
+		createLinkedMatrix(concepts, map);
+
+		// when
+		ConceptMap map2 = map.clone();
+
+		// then
+		assertEquals(map, map2);
+		assertNotSame(map, map2);
+
+		map2.removeConcept(concepts.get("dog"));
+		assertNotEquals(map, map2);
+
+	}
 
 }
