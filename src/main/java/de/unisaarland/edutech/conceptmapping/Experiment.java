@@ -14,12 +14,14 @@ public class Experiment implements Serializable {
 	private Date runDate;
 	private List<User> participants = new ArrayList<User>();
 	private FocusQuestion focusQuestion;
-
-	public Experiment(User researcher, FocusQuestion question) {
-		this(researcher, question, new Date());
+	public final int  USER_COUNT;
+	
+	public Experiment(User researcher, FocusQuestion question, int numberOfUsers) {
+		this(researcher, question, new Date(),numberOfUsers);
 	}
 
-	public Experiment(User researcher, FocusQuestion question, Date run) {
+	public Experiment(User researcher, FocusQuestion question, Date run,int numberOfUsers) {
+		this.USER_COUNT = numberOfUsers;
 		this.reseacher = researcher;
 		this.runDate = run;
 		this.focusQuestion = question;
