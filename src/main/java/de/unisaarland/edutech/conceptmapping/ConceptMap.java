@@ -204,7 +204,6 @@ public class ConceptMap implements Cloneable, Serializable {
 
 	@Override
 	public ConceptMap clone() {
-	
 
 		// focus Question
 		FocusQuestion oldQuestion = experiment.getFocusQuestion();
@@ -215,12 +214,12 @@ public class ConceptMap implements Cloneable, Serializable {
 		// experiment
 		User researcherClone = this.experiment.getReseacher();
 		Date runDateClone = new Date(this.experiment.getRunDate().getTime());
-		Experiment experimentClone = new Experiment(researcherClone, questionClone, runDateClone,4);
-		
+		Experiment experimentClone = new Experiment(researcherClone, questionClone, runDateClone, 4);
+
 		experiment.getParticipants().forEach((v) -> experimentClone.addParticipant(v));
 
 		ConceptMap map;
-		
+
 		try {
 			map = (ConceptMap) super.clone();
 		} catch (CloneNotSupportedException e) {
@@ -230,7 +229,7 @@ public class ConceptMap implements Cloneable, Serializable {
 		map.experiment = experimentClone;
 		map.adjacencyMatrix = new Link[this.adjacencyMatrix.length][this.adjacencyMatrix.length];
 		map.concepts = new ArrayList<>();
-		
+
 		// concepts
 		for (Concept c : concepts) {
 			map.concepts.add(c.clone());
@@ -288,5 +287,30 @@ public class ConceptMap implements Cloneable, Serializable {
 		return true;
 	}
 
-	
+	public int getIngoingLinkCount(Concept c) {
+		int index = indexOf(c);
+		if (index == -1)
+			return 0;
+
+		int sum = 0;
+		for (int i = 0; i < getConceptCount(); i++) {
+			if (adjacencyMatrix[i][index] != null)
+				sum++;
+		}
+		return sum;
+	}
+
+	public int getOutgoingLinkCount(Concept c) {
+		int index = indexOf(c);
+		if (index == -1)
+			return 0;
+
+		int sum = 0;
+		for (int i = 0; i < getConceptCount(); i++) {
+			if (adjacencyMatrix[index][i] != null)
+				sum++;
+		}
+		return sum;
+	}
+
 }
