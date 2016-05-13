@@ -136,7 +136,7 @@ public class ConceptMapTests {
 		cm.put("trap", new Concept(new CollaborativeString(tim, "Trap")));
 		cm.put("airplane", new Concept(new CollaborativeString(tim, "Airpl.")));
 
-		Experiment experiment = new Experiment(tim, question,4);
+		Experiment experiment = new Experiment(tim, question,4,false);
 		ConceptMap map = new ConceptMap(experiment);
 
 		map.addConcept(cm.get("dog"));

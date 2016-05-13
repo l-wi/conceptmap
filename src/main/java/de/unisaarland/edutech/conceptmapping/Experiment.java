@@ -14,14 +14,17 @@ public class Experiment implements Serializable {
 	private Date runDate;
 	private List<User> participants = new ArrayList<User>();
 	private FocusQuestion focusQuestion;
-	public final int  USER_COUNT;
-	
-	public Experiment(User researcher, FocusQuestion question, int numberOfUsers) {
-		this(researcher, question, new Date(),numberOfUsers);
+
+	public final boolean USE_AWT;
+	public final int USER_COUNT;
+
+	public Experiment(User researcher, FocusQuestion question, int numberOfUsers, boolean useAwt) {
+		this(researcher, question, new Date(), numberOfUsers, useAwt);
 	}
 
-	public Experiment(User researcher, FocusQuestion question, Date run,int numberOfUsers) {
+	public Experiment(User researcher, FocusQuestion question, Date run, int numberOfUsers, boolean useAwt) {
 		this.USER_COUNT = numberOfUsers;
+		this.USE_AWT = useAwt;
 		this.reseacher = researcher;
 		this.runDate = run;
 		this.focusQuestion = question;
@@ -110,5 +113,4 @@ public class Experiment implements Serializable {
 		return true;
 	}
 
-	
 }

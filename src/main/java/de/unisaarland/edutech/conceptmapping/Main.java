@@ -14,7 +14,7 @@ public class Main {
 		
 		//experiment setup
 		FocusQuestion question = new FocusQuestion("How do geese fly?", researcher);
-		Experiment experiment = new Experiment(researcher, question,4);
+		Experiment experiment = new Experiment(researcher, question,4,false);
 		
 		
 		

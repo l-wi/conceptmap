@@ -214,7 +214,8 @@ public class ConceptMap implements Cloneable, Serializable {
 		// experiment
 		User researcherClone = this.experiment.getReseacher();
 		Date runDateClone = new Date(this.experiment.getRunDate().getTime());
-		Experiment experimentClone = new Experiment(researcherClone, questionClone, runDateClone, 4);
+		Experiment experimentClone = new Experiment(researcherClone, questionClone, runDateClone, 4,
+				this.experiment.USE_AWT);
 
 		experiment.getParticipants().forEach((v) -> experimentClone.addParticipant(v));
 
