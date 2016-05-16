@@ -17,16 +17,19 @@ public class Experiment implements Serializable {
 
 	public final boolean USE_AWT;
 	public final int USER_COUNT;
+	public final boolean USE_VOTING;
 
-	public Experiment(User researcher, FocusQuestion question, int numberOfUsers, boolean useAwt) {
-		this(researcher, question, new Date(), numberOfUsers, useAwt);
+	public Experiment(User researcher, FocusQuestion question, int numberOfUsers, boolean useAwt, boolean useVoting) {
+		this(researcher, question, new Date(), numberOfUsers, useAwt, useVoting);
 	}
 
-	public Experiment(User researcher, FocusQuestion question, Date run, int numberOfUsers, boolean useAwt) {
-		this.USER_COUNT = numberOfUsers;
+	public Experiment(User researcher, FocusQuestion question, Date date, Integer userCount, boolean useAwt,
+			boolean useVoting) {
+		this.USER_COUNT = userCount;
 		this.USE_AWT = useAwt;
+		this.USE_VOTING = useVoting;
 		this.reseacher = researcher;
-		this.runDate = run;
+		this.runDate = date;
 		this.focusQuestion = question;
 	}
 
