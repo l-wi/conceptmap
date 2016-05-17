@@ -11,6 +11,7 @@ public class User implements Serializable {
 	private static final EmailValidator EMAIL_VALIDATOR = EmailValidator.getInstance();
 	private String name;
 	private String email;
+	private String prompt;
 
 	public User(String name, String email) {
 		throwIfInvalidEmail(email);
@@ -26,6 +27,14 @@ public class User implements Serializable {
 		return name;
 	}
 
+	public void setPrompt(String prompt) {
+		this.prompt = prompt;
+	}
+	
+	public String getPrompt() {
+		return prompt;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
